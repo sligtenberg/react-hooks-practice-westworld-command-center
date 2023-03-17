@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Radio,
   Icon,
@@ -10,34 +10,33 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo() {
-  // This state is just to show how the dropdown component works.
-  // Options have to be formatted in this way (array of objects with keys of: key, text, value)
-  // Value has to match the value in the object to render the right text.
-
-  // IMPORTANT: But whether it should be stateful or not is entirely up to you. Change this component however you like.
-  const [options] = useState([
-    { key: "some_area", text: "Some Area", value: "some_area" },
-    { key: "another_area", text: "Another Area", value: "another_area" },
-  ]);
-
-  const [value] = useState("some_area");
+function HostInfo({ host, updateHost }) {
+  const options = [
+    { key: "high_plains", text: "High Plains", value: "high_plains" },
+    { key: "lowlands", text: "Lowlands", value: "lowlands" },
+    { key: "under_construction", text: "Under Construction", value: "under_construction" },
+    { key: "pariah", text: "Pariah", value: "pariah" },
+    { key: "python_pass", text: "Python Pass", value: "python_pass" },
+    { key: "badlands", text: "Badlands", value: "badlands" }
+  ];
 
   function handleOptionChange(e, { value }) {
-    // the 'value' attribute is given via Semantic's Dropdown component.
-    // Put a debugger or console.log in here and see what the "value" variable is when you pass in different options.
-    // See the Semantic docs for more info: https://react.semantic-ui.com/modules/dropdown/#usage-controlled
+    const newHost = host
+    newHost.area = value
+    updateHost(host, 'area')
   }
 
   function handleRadioChange() {
-    console.log("The radio button fired");
+    const newHost = host
+    newHost.active = !host.active
+    updateHost(newHost, 'active')
   }
 
   return (
     <Grid>
       <Grid.Column width={6}>
         <Image
-          src={/* pass in the right image here */ ""}
+          src={host.imageUrl}
           floated="left"
           size="small"
           className="hostImg"
@@ -47,16 +46,13 @@ function HostInfo() {
         <Card>
           <Card.Content>
             <Card.Header>
-              {"Bob"} | {true ? <Icon name="man" /> : <Icon name="woman" />}
-              {/* Think about how the above should work to conditionally render the right First Name and the right gender Icon */}
+              {host.firstName} | {host.gender === "Male" ? <Icon name="man" /> : <Icon name="woman" />}
             </Card.Header>
             <Card.Meta>
-              {/* Sometimes the label should take "Decommissioned". How are we going to conditionally render that? */}
-              {/* Checked takes a boolean and determines what position the switch is in. Should it always be true? */}
               <Radio
                 onChange={handleRadioChange}
-                label={"Active"}
-                checked={true}
+                label={host.active ? "Active" : "Decommissioned"}
+                checked={host.active}
                 slider
               />
             </Card.Meta>
@@ -64,7 +60,7 @@ function HostInfo() {
             Current Area:
             <Dropdown
               onChange={handleOptionChange}
-              value={value}
+              value={host.area}
               options={options}
               selection
             />

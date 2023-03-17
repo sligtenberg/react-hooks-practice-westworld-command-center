@@ -1,18 +1,19 @@
 import React from "react";
 import "../stylesheets/Area.css";
+import HostList from "./HostList";
 
-function Area() {
+function Area({ areaName, hosts }) {
+  const hostsInArea = hosts.filter(host => host.area === areaName && host.active === true)
+
   return (
     <div
       className="area"
-      id={
-        /* Pass in the area name here to make sure this is styled correctly */ "id"
-      }
+      id={areaName}
     >
       <h3 className="labels">
-        {/* Don't just pass in the name from the data...clean that thing up */}
+        {areaName.replace(/^_*(.)|_+(.)/g, (s, c, d) => c ? c.toUpperCase() : ' ' + d.toUpperCase())}
       </h3>
-      {/* See Checkpoint 1 item 2 in the Readme for a clue as to what goes here */}
+      {<HostList hosts={hostsInArea} />}
     </div>
   );
 }
