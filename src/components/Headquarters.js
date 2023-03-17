@@ -1,13 +1,13 @@
-import React, {useState } from "react";
+import React from "react";
 import { Grid } from "semantic-ui-react";
 import Details from "./Details";
 import "../stylesheets/Headquarters.css";
 import HostList from "./HostList";
 import LogPanel from "./LogPanel";
-import { Log } from "../services/Log";
+//import { Log } from "../services/Log";
 
 function Headquarters({ hosts, setHosts }) {
-  const [logs, setLogs] = useState([])
+  //const [logs, setLogs] = useState([])
 
   const hostsInColdStorage = hosts.filter(host => host.active === false)
 
@@ -32,7 +32,7 @@ function Headquarters({ hosts, setHosts }) {
         <Details updateHost={updateHost}/>
       </Grid.Column>
       <Grid.Column width={3}>
-        <LogPanel logs={logs}/>
+        <LogPanel hosts={hosts} updateHost={updateHost}/>
       </Grid.Column>
     </Grid>
   );

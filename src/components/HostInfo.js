@@ -8,6 +8,7 @@ import {
   Dropdown,
   Divider,
 } from "semantic-ui-react";
+import { AreasContext } from "../context/Context";
 import "../stylesheets/HostInfo.css";
 
 function HostInfo({ host, updateHost }) {
@@ -20,7 +21,8 @@ function HostInfo({ host, updateHost }) {
     { key: "badlands", text: "Badlands", value: "badlands" }
   ];
 
-  function handleOptionChange(e, { value }) {
+  function handleLocationChange(e, { value }) {
+
     const newHost = host
     newHost.area = value
     updateHost(host, 'area')
@@ -46,7 +48,8 @@ function HostInfo({ host, updateHost }) {
         <Card>
           <Card.Content>
             <Card.Header>
-              {host.firstName} | {host.gender === "Male" ? <Icon name="man" /> : <Icon name="woman" />}
+              {host.firstName} |
+              {host.gender === "Male" ? <Icon name="man" /> : <Icon name="woman" />}
             </Card.Header>
             <Card.Meta>
               <Radio
@@ -59,7 +62,7 @@ function HostInfo({ host, updateHost }) {
             <Divider />
             Current Area:
             <Dropdown
-              onChange={handleOptionChange}
+              onChange={handleLocationChange}
               value={host.area}
               options={options}
               selection

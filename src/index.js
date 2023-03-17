@@ -2,11 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
 import App from "./components/App";
-import { SelectedHostProvider } from "./context/selectedHost"
+import { SelectedHostProvider, AreasProvider } from "./context/Context"
 
 ReactDOM.render(
-    <SelectedHostProvider>
-      <App /> 
-    </SelectedHostProvider>, 
+    <AreasProvider >
+      <SelectedHostProvider >
+        <App /> 
+      </SelectedHostProvider >
+    </AreasProvider >, 
     document.getElementById("root")
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Segment } from "semantic-ui-react";
+import { AreasContext } from "../context/Context";
 import Area from "./Area";
 
 function WestworldMap({ hosts }) {
