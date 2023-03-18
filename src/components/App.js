@@ -6,6 +6,8 @@ import Headquarters from "./Headquarters";
 
 function App() {
   const [hosts, setHosts] = useState([])
+  const [areas, setAreas] = useState([])
+  //const [hostsInAreas, setHostsInAreas] = useState({})
 
   useEffect(() => {
     fetch("http://localhost:3000/hosts")
@@ -13,10 +15,16 @@ function App() {
     .then(setHosts)
   }, [])
 
+  useEffect(() => {
+    fetch("http://localhost:3000/areas")
+    .then(r => r.json())
+    .then(setAreas)
+  }, [])
+
   return (
     <Segment id="app">
-      <WestworldMap hosts={hosts} />
-      <Headquarters hosts={hosts} setHosts={setHosts}/>
+      <WestworldMap hosts={hosts} areas={areas} />
+      <Headquarters hosts={hosts} areas={areas} setHosts={setHosts}/>
     </Segment>
   );
 }

@@ -4,13 +4,13 @@ import { SelectedHostContext } from "../context/Context";
 import * as Images from "../services/Images";
 import HostInfo from "./HostInfo";
 
-function Details({ updateHost }) {
+function Details({ areas, updateHost, hostsInArea }) {
   const selectedHost = useContext(SelectedHostContext)[0]
 
   return (
     <Segment id="details" className="HQComps">
       {selectedHost ?
-        <HostInfo host={selectedHost} updateHost={updateHost}/> :
+        <HostInfo host={selectedHost} areas={areas} updateHost={updateHost} hostsInArea={hostsInArea}/> :
         <Image size="medium" src={Images.westworldLogo}
       />}
     </Segment>

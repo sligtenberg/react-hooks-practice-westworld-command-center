@@ -8,24 +8,27 @@ import {
   Dropdown,
   Divider,
 } from "semantic-ui-react";
-import { AreasContext } from "../context/Context";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo({ host, updateHost }) {
-  const options = [
-    { key: "high_plains", text: "High Plains", value: "high_plains" },
-    { key: "lowlands", text: "Lowlands", value: "lowlands" },
-    { key: "under_construction", text: "Under Construction", value: "under_construction" },
-    { key: "pariah", text: "Pariah", value: "pariah" },
-    { key: "python_pass", text: "Python Pass", value: "python_pass" },
-    { key: "badlands", text: "Badlands", value: "badlands" }
-  ];
+function HostInfo({ host, areas, updateHost, hostsInArea }) {
 
-  function handleLocationChange(e, { value }) {
+  const areaOptions = areas.map(area => {
+    return {
+      key: area.id,
+      text: area.name.replace(/^_*(.)|_+(.)/g, (s, c, d) => c ? c.toUpperCase() : ' ' + d.toUpperCase()),
+      value: area.name
+    }
+  })
 
-    const newHost = host
-    newHost.area = value
-    updateHost(host, 'area')
+  function handleLocationChange(event, { value }) {
+    const newArea = areas.find(area => area.name === value)
+    if (newArea.limit <= hostsInArea[newArea.name]) console.log("Too many hosts in destination!")
+    else {
+      console.log("do it!")
+      const newHost = host
+      newHost.area = value
+      updateHost(host, 'area')
+    }
   }
 
   function handleRadioChange() {
@@ -64,7 +67,7 @@ function HostInfo({ host, updateHost }) {
             <Dropdown
               onChange={handleLocationChange}
               value={host.area}
-              options={options}
+              options={areaOptions}
               selection
             />
           </Card.Content>

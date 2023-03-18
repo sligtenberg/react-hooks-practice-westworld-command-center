@@ -6,9 +6,16 @@ import HostList from "./HostList";
 import LogPanel from "./LogPanel";
 //import { Log } from "../services/Log";
 
-function Headquarters({ hosts, setHosts }) {
+function Headquarters({ hosts, areas, setHosts }) {
   //const [logs, setLogs] = useState([])
 
+  const hostsInArea = {}
+  areas.forEach(area => {
+    let numHosts = 0
+    hosts.forEach(host => host.area === area.name ? numHosts++ : null)
+    hostsInArea[area.name] = numHosts
+  })
+  
   const hostsInColdStorage = hosts.filter(host => host.active === false)
 
   function updateHost(newHost, attribute) {
@@ -29,7 +36,7 @@ function Headquarters({ hosts, setHosts }) {
     <Grid celled="internally">
       <Grid.Column width={8}>{<HostList hosts={hostsInColdStorage}/>}</Grid.Column>
       <Grid.Column width={5}>
-        <Details updateHost={updateHost}/>
+        <Details areas={areas} updateHost={updateHost} hostsInArea={hostsInArea}/>
       </Grid.Column>
       <Grid.Column width={3}>
         <LogPanel hosts={hosts} updateHost={updateHost}/>
