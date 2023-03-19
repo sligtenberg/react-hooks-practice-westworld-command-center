@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid } from "semantic-ui-react";
 import Details from "./Details";
 import "../stylesheets/Headquarters.css";
 import HostList from "./HostList";
 import LogPanel from "./LogPanel";
-//import { Log } from "../services/Log";
+import { Log } from "../services/Log";
 
 function Headquarters({ hosts, areas, setHosts }) {
-  //const [logs, setLogs] = useState([])
+  const [logs, setLogs] = useState([])
+
+  function writeLog(type, message) {
+    switch(type) {
+      case "notify": setLogs([Log.notify(message), ...logs]); break
+      case "warn": setLogs([Log.warn(message), ...logs]); break
+      case "error": setLogs([Log.error(message), ...logs]); break
+      default:
+    }
+  }
 
   const hostsInArea = {}
   areas.forEach(area => {
@@ -37,10 +46,10 @@ function Headquarters({ hosts, areas, setHosts }) {
     <Grid celled="internally">
       <Grid.Column width={8}>{<HostList hosts={hostsInColdStorage}/>}</Grid.Column>
       <Grid.Column width={5}>
-        <Details areas={areas} updateHost={updateHost} hostsInArea={hostsInArea}/>
+        <Details areas={areas} updateHost={updateHost} hostsInArea={hostsInArea} writeLog={writeLog}/>
       </Grid.Column>
       <Grid.Column width={3}>
-        <LogPanel hosts={hosts} updateHost={updateHost}/>
+        <LogPanel hosts={hosts} updateHost={updateHost} logs={logs} writeLog={writeLog}/>
       </Grid.Column>
     </Grid>
   );

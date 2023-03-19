@@ -18,14 +18,4 @@ function Area({ areaName, hosts }) {
   );
 }
 
-// Area.propTypes = {
-//   hosts: function (props) {
-//     if (props.hosts.length > props.limit) {
-//       throw Error(
-//         `HEY!! You got too many hosts in ${props.name}. The limit for that area is ${props.limit}. You gotta fix that!`
-//       );
-//     }
-//   },
-// };
-
 export default Area;

@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo({ host, areas, updateHost, hostsInArea }) {
+function HostInfo({ host, areas, updateHost, hostsInArea, writeLog }) {
 
   const areaOptions = areas.map(area => {
     return {
@@ -21,18 +21,19 @@ function HostInfo({ host, areas, updateHost, hostsInArea }) {
 
   function handleLocationChange(event, { value }) {
     const newArea = areas.find(area => area.name === value)
-    if (newArea.limit <= hostsInArea[newArea.name]) console.log("Too many hosts in destination!")
+    if (newArea.limit <= hostsInArea[newArea.name]) writeLog('error', `Too many hosts. Cannot add ${host.firstName} to ${value.replace(/^_*(.)|_+(.)/g, (s, c, d) => c ? c.toUpperCase() : ' ' + d.toUpperCase())}.`)
     else {
-      console.log("do it!")
       const newHost = host
       newHost.area = value
       updateHost(host, 'area')
+      writeLog('notify', `${host.firstName} set in ${value.replace(/^_*(.)|_+(.)/g, (s, c, d) => c ? c.toUpperCase() : ' ' + d.toUpperCase())}.`)
     }
   }
 
   function handleRadioChange() {
     const newHost = host
     newHost.active = !host.active
+    writeLog(newHost.active ? 'warn' : 'notify', `${newHost.active ? 'Activated' : 'Decommissioned'} ${host.firstName}.`)
     updateHost(newHost, 'active')
   }
 
