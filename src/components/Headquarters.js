@@ -12,9 +12,10 @@ function Headquarters({ hosts, areas, setHosts }) {
   const hostsInArea = {}
   areas.forEach(area => {
     let numHosts = 0
-    hosts.forEach(host => host.area === area.name ? numHosts++ : null)
+    hosts.forEach(host => numHosts += host.area === area.name ? 1 : 0)
     hostsInArea[area.name] = numHosts
   })
+  console.log(hostsInArea)
   
   const hostsInColdStorage = hosts.filter(host => host.active === false)
 

@@ -3,7 +3,7 @@ import { Card } from "semantic-ui-react";
 import Host from "./Host";
 
 function HostList({ hosts }) {
-  const hostComponents = hosts.map(host => <Host key={host.firstName} host={host} />)
+  const hostComponents = hosts.map(host => <Host key={host.firstName + host.lastName} host={host} />)
 
   return (
     <Card.Group itemsPerRow={6}>{hostComponents}</Card.Group>

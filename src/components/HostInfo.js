@@ -14,7 +14,6 @@ function HostInfo({ host, areas, updateHost, hostsInArea }) {
 
   const areaOptions = areas.map(area => {
     return {
-      key: area.id,
       text: area.name.replace(/^_*(.)|_+(.)/g, (s, c, d) => c ? c.toUpperCase() : ' ' + d.toUpperCase()),
       value: area.name
     }

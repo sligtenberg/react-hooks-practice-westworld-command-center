@@ -7,7 +7,6 @@ import Headquarters from "./Headquarters";
 function App() {
   const [hosts, setHosts] = useState([])
   const [areas, setAreas] = useState([])
-  //const [hostsInAreas, setHostsInAreas] = useState({})
 
   useEffect(() => {
     fetch("http://localhost:3000/hosts")

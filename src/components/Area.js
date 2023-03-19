@@ -4,8 +4,6 @@ import HostList from "./HostList";
 
 function Area({ areaName, hosts }) {
   const hostsInArea = hosts.filter(host => host.area === areaName && host.active === true)
-  // console.log(`${areaName} has ${hostsInArea.length} hosts.`)
-  // setHostsInAreas()
 
   return (
     <div
